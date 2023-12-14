@@ -54,7 +54,7 @@ int lineno = 1;
     return NUM;
     }
 
-\'[a-zA-Z]\' {
+\'.\' {
     strcpy(yylval.ident, yytext);
     return CHARACTER;}
 
