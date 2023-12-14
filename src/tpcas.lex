@@ -95,18 +95,13 @@ return {
 . ;
 
 %%
-int yywrap(void)
-{
-    return 0;
-}
 
 int yyerror(char *errormsg)
 {
     fprintf(stderr, "%s\n", errormsg);
-    exit(1);
+    return 1;
 }
 
 int main(void){
-    yyparse();
-    return 0;
+    return yyparse();
 }
