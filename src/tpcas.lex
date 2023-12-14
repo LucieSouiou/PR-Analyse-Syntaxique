@@ -96,7 +96,7 @@ return {
 
 "\n" {lineno++;} 
 
-. {return yytext[0]};
+. ;
 
 <<EOF>> {return 0;}
 
