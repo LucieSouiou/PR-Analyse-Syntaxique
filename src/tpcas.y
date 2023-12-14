@@ -1,5 +1,5 @@
 %{
-
+#include "tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 int yyerror(const char *s);
@@ -22,12 +22,13 @@ extern int lineno;
 %token <ident>AND;
 %token <num>NUM;
 %token <ident>CHARACTER;
-%token <ident>IF;
 %token <ident>ELSE;
 %token <ident>IDENT;
 %token <ident>VOID;
 %token <ident>WHILE;
 %token <ident>RETURN;
+%token <ident>IF;
+%expect 1 
 
 %%
 Prog:  DeclVars DeclFoncts

@@ -1,4 +1,5 @@
 %{
+#include "tree.h"
 #include "tpcas.tab.h"
 #include <string.h>
 int yyerror(char *errormsg);
@@ -82,25 +83,18 @@ return {
     return RETURN;
     }
 
-[(){},;!=] {return yytext[0]};
+[(){},;!=] {return yytext[0];}
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     strcpy(yylval.ident, yytext);
     return IDENT;
     }
 
-\; ;
-
 "\n" {lineno++;} 
+
 . ;
 
 %%
-
-int main(void){
-    yyparse();
-    return 0;
-}
-
 int yywrap(void)
 {
     return 0;
@@ -110,4 +104,9 @@ int yyerror(char *errormsg)
 {
     fprintf(stderr, "%s\n", errormsg);
     exit(1);
+}
+
+int main(void){
+    yyparse();
+    return 0;
 }

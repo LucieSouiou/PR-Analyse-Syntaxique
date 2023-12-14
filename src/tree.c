@@ -6,10 +6,40 @@
 extern int lineno;       /* from lexer */
 
 static const char *StringFromLabel[] = {
+  "TYPE",
+  "EQ",
+  "ORDER",
+  "DIVSTAR",
+  "ADDSUB",
+  "OR",
+  "AND",
+  "NUM",
+  "CHARACTER",
+  "IF",
+  "ELSE",
+  "IDENT",
+  "VOID",
+  "WHILE",
+  "RETURN",
+  "DeclVars",
+  "Declarateurs",
+  "DeclFoncts",
+  "EnTeteFonct",
+  "Corps",
+  "Parametres",
+  "ListTypVar",
+  "SuiteInstr",
+  "Instr",
+  "Exp",
+  "TB",
+  "FB",
+  "M",
   "E",
   "T",
-  "divstar",
-  "id"
+  "F",
+  "LValue",
+  "Arguments",
+  "ListExp"
   /* list all other node labels, if any */
   /* The list must coincide with the label_t enum in tree.h */
   /* To avoid listing them twice, see https://stackoverflow.com/a/10966395 */

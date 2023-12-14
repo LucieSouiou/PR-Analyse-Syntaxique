@@ -5,23 +5,24 @@
 # $< : the first current prerequisite
 
 CC=gcc
-CFLAGS=-Wall
-LDFLAGS=-Wall -lfl
+CFLAGS=-Wall -lfl -I./src
 
 all: bin/tpcas
 
-bin/tpcas : obj/tpcas.tab.o obj/lex.yy.o
-	$(CC) $^ -o $@
+bin/tpcas : obj/tpcas.tab.o obj/lex.yy.o obj/tree.o
+	$(CC) $^ -o $@ $(CFLAGS)
 
-%.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
+obj/tree.o : src/tree.c src/tree.h
+	$(CC) -o $@ -c $<
 
-obj/lex.yy.c :
+obj/lex.yy.c : src/tpcas.lex
 	flex -o $@ src/tpcas.lex
-	mv lex.yy.c $@
 
-obj/tpcas.tab.c :
+obj/tpcas.tab.c : src/tpcas.y
 	bison -d src/tpcas.y -o $@
+
+%.o : %.
+	$(CC) $< -c -o $@
 
 clean:
 	rm -f obj/*
