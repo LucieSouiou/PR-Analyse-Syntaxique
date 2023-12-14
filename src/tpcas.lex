@@ -2,7 +2,7 @@
 #include "tree.h"
 #include "tpcas.tab.h"
 #include <string.h>
-int yyerror(char *errormsg);
+void yyerror(char *errormsg);
 int lineno = 1;
 %}
 %x commentaire
@@ -21,7 +21,32 @@ int lineno = 1;
     return TYPE;
     }
 
-(==)|(!=) {
+if {
+    strcpy(yylval.ident, yytext);
+    return IF;
+    }
+
+else {
+    strcpy(yylval.ident, yytext);
+    return ELSE;
+    }
+
+while {
+    strcpy(yylval.ident, yytext);
+    return WHILE;
+    }
+
+void {
+    strcpy(yylval.ident, yytext);
+    return VOID;
+    }
+
+return {
+    strcpy(yylval.ident, yytext);
+    return RETURN;
+    }
+
+[!=]= {
     strcpy(yylval.ident, yytext);
     return EQ;
     }
@@ -49,39 +74,18 @@ int lineno = 1;
     return AND;
     }
 
-[0-9]+ {
+([1-9][0-9]*)|0 {
     yylval.num = atoi(yytext);
     return NUM;
     }
 
-\'.\' {
+\'\\[trn0]\' {
     strcpy(yylval.ident, yytext);
     return CHARACTER;}
 
-if {
+\'.\' {
     strcpy(yylval.ident, yytext);
-    return IF;
-    }
-
-else {
-    strcpy(yylval.ident, yytext);
-    return ELSE;
-    }
-
-while {
-    strcpy(yylval.ident, yytext);
-    return WHILE;
-    }
-
-void {
-    strcpy(yylval.ident, yytext);
-    return VOID;
-    }
-
-return {
-    strcpy(yylval.ident, yytext);
-    return RETURN;
-    }
+    return CHARACTER;}
 
 [(){},;!=] {return yytext[0];}
 
@@ -92,14 +96,15 @@ return {
 
 "\n" {lineno++;} 
 
-. ;
+. {return yytext[0]};
+
+<<EOF>> {return 0;}
 
 %%
 
-int yyerror(char *errormsg)
+void yyerror(char *errormsg)
 {
     fprintf(stderr, "%s\n", errormsg);
-    return 1;
 }
 
 int main(void){
