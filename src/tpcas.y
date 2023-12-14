@@ -2,26 +2,32 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-int yylex(void);
 int yyerror(const char *s);
-
+int yylex(void);
+extern int lineno;
 %}
 
-%token TYPE;
-%token EQ;
-%token ORDER;
-%token DIVSTAR;
-%token ADDSUB;
-%token OR;
-%token AND;
-%token NUM;
-%token CHARACTER;
-%token IF;
-%token ELSE
-%token IDENT;
-%token VOID;
-%token WHILE;
-%token RETURN;
+%union {
+    Node *node;
+    char ident[64];
+    int num;
+}
+
+%token <ident>TYPE;
+%token <ident>EQ;
+%token <ident>ORDER;
+%token <ident>DIVSTAR;
+%token <ident>ADDSUB;
+%token <ident>OR;
+%token <ident>AND;
+%token <num>NUM;
+%token <ident>CHARACTER;
+%token <ident>IF;
+%token <ident>ELSE;
+%token <ident>IDENT;
+%token <ident>VOID;
+%token <ident>WHILE;
+%token <ident>RETURN;
 
 %%
 Prog:  DeclVars DeclFoncts

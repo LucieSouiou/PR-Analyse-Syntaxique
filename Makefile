@@ -17,11 +17,11 @@ bin/tpcas : obj/tpcas.tab.o obj/lex.yy.o
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 obj/lex.yy.c :
-	flex src/tpcas.lex
+	flex -o $@ src/tpcas.lex
 	mv lex.yy.c $@
 
 obj/tpcas.tab.c :
-	bison -d src/tpcas.y -o obj/tpcas.tab.c
+	bison -d src/tpcas.y -o $@
 
 clean:
 	rm -f obj/*
