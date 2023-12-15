@@ -10,6 +10,7 @@ extern int lineno;
 %union {
     Node *node;
     char ident[64];
+    char byte;
     int num;
 }
 

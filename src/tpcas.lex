@@ -56,11 +56,12 @@ return {
     }
 
 [*/%] {
-    strcpy(yylval.ident, yytext);
+    yylval.byte = yytext[0];
     return DIVSTAR;
     }
 
-[+-] {strcpy(yylval.ident, yytext);
+[+-] {
+    yylval.byte = yytext[0];
     return ADDSUB;
     }
 
@@ -84,10 +85,8 @@ return {
     return CHARACTER;}
 
 \'.\' {
-    strcpy(yylval.ident, yytext);
+    yylval.byte = yytext[1];
     return CHARACTER;}
-
-[(){},;!=] {return yytext[0];}
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     strcpy(yylval.ident, yytext);
@@ -96,7 +95,12 @@ return {
 
 "\n" {lineno++;} 
 
-. ;
+[\t\r ] ;
+
+. {
+    yylval.byte = yytext[0];
+    return yytext[0];
+    }
 
 <<EOF>> {return 0;}
 
