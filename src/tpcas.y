@@ -40,7 +40,12 @@ DeclVars:
     ;
 Declarateurs:
        Declarateurs ',' IDENT
+    |  DeclArray
     |  IDENT
+    ;
+DeclArray:
+        IDENT '[' NUM ']'
+    |
     ;
 DeclFoncts:
        DeclFoncts DeclFonct
@@ -60,6 +65,7 @@ Parametres:
 ListTypVar:
        ListTypVar ',' TYPE IDENT
     |  TYPE IDENT
+    |  TYPE IDENT '[' ']'
     ;
 Corps: '{' DeclVars SuiteInstr '}'
     ;
@@ -102,10 +108,11 @@ F   :  ADDSUB F
     |  NUM
     |  CHARACTER
     |  LValue
-    |  IDENT '(' Arguments  ')'
+    |  IDENT '(' Arguments ')'
     ;
 LValue:
        IDENT
+    |  IDENT '[' Exp ']'
     ;
 Arguments:
        ListExp
