@@ -1,0 +1,13 @@
+int add(int a, int b) {
+    int c;
+    c = 5;
+    return a + b;
+}
+
+
+int main(void) {
+    int argc;
+    argc = 5;
+    char tab[4];
+    return 0;
+}
