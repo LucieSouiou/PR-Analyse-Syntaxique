@@ -40,12 +40,12 @@ DeclVars:
     ;
 Declarateurs:
        Declarateurs ',' IDENT
+    |  Declarateurs ',' DeclArray
     |  DeclArray
     |  IDENT
     ;
 DeclArray:
         IDENT '[' NUM ']'
-    |
     ;
 DeclFoncts:
        DeclFoncts DeclFonct
@@ -64,6 +64,7 @@ Parametres:
     ;
 ListTypVar:
        ListTypVar ',' TYPE IDENT
+    |  ListTypVar ',' TYPE IDENT '[' ']'
     |  TYPE IDENT
     |  TYPE IDENT '[' ']'
     ;
