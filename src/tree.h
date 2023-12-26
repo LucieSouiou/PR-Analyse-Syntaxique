@@ -7,6 +7,7 @@ typedef enum {
   ORDER_e,
   DIVSTAR_e,
   ADDSUB_e,
+  ADDSUB_UN_e,
   OR_e,
   AND_e,
   NUM_e,
@@ -35,7 +36,8 @@ typedef enum {
   F_e,
   LValue_e,
   Arguments_e,
-  ListExp_e
+  ListExp_e,
+  Negatif_e,
   /* list all other node labels, if any */
   /* The list must coincide with the string array in tree.c */
   /* To avoid listing them twice, see https://stackoverflow.com/a/10966395 */

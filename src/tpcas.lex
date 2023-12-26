@@ -110,7 +110,3 @@ void yyerror(char *errormsg)
 {
     fprintf(stderr, "%s\n", errormsg);
 }
-
-int main(void){
-    return yyparse();
-}

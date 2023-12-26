@@ -12,6 +12,7 @@ static const char *StringFromLabel[] = {
   "ORDER",
   "DIVSTAR",
   "ADDSUB",
+  "ADDSUB_UN",
   "OR",
   "AND",
   "NUM",
@@ -40,7 +41,8 @@ static const char *StringFromLabel[] = {
   "F",
   "LValue",
   "Arguments",
-  "ListExp"
+  "ListExp",
+  "Negatif"
   /* list all other node labels, if any */
   /* The list must coincide with the label_t enum in tree.h */
   /* To avoid listing them twice, see https://stackoverflow.com/a/10966395 */
