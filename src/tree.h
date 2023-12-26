@@ -1,6 +1,7 @@
 /* tree.h */
 
 typedef enum {
+  Prog_e,
   TYPE_e,
   EQ_e,
   ORDER_e,

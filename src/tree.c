@@ -6,6 +6,7 @@
 extern int lineno;       /* from lexer */
 
 static const char *StringFromLabel[] = {
+  "Prog",
   "TYPE",
   "EQ",
   "ORDER",
