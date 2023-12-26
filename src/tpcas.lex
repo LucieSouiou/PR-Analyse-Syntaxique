@@ -2,7 +2,7 @@
 #include "tree.h"
 #include "tpcas.tab.h"
 #include <string.h>
-void yyerror(char *errormsg);
+int yyerror(char *errormsg);
 int lineno = 1;
 %}
 %x commentaire
@@ -105,8 +105,3 @@ return {
 <<EOF>> {return 0;}
 
 %%
-
-void yyerror(char *errormsg)
-{
-    fprintf(stderr, "%s\n", errormsg);
-}

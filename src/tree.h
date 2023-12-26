@@ -38,6 +38,9 @@ typedef enum {
   Arguments_e,
   ListExp_e,
   Negatif_e,
+  Assign_e,
+  ARRAY_e,
+  AppelFonc_e
   /* list all other node labels, if any */
   /* The list must coincide with the string array in tree.c */
   /* To avoid listing them twice, see https://stackoverflow.com/a/10966395 */
