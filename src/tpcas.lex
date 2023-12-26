@@ -56,12 +56,12 @@ return {
     }
 
 [*/%] {
-    yylval.byte = yytext[0];
+    strcpy(yylval.ident, yytext);
     return DIVSTAR;
     }
 
 [+-] {
-    yylval.byte = yytext[0];
+    strcpy(yylval.ident, yytext);
     return ADDSUB;
     }
 
@@ -85,7 +85,7 @@ return {
     return CHARACTER;}
 
 \'.\' {
-    yylval.byte = yytext[1];
+    strcpy(yylval.ident, yytext);
     return CHARACTER;}
 
 [a-zA-Z_][a-zA-Z0-9_]* {
@@ -98,7 +98,7 @@ return {
 [\t\r ] ;
 
 . {
-    yylval.byte = yytext[0];
+    strcpy(yylval.ident, yytext);
     return yytext[0];
     }
 
