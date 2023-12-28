@@ -1,13 +1,12 @@
-int addition(int a, int b)
-{
+int add(int a, int b) {
     return a + b;
 }
 
-int main(void)
-{
-    int a;
-    int b;
-    a = 1;
-    b = 2;
-    return addition(a, b);
+
+int main(int argc, char argv[]) {
+    char tab[5];
+    int coucou;
+    coucou = 5*3;
+    tab[2] = 2;
+    return 0;
 }

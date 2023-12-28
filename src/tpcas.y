@@ -2,9 +2,12 @@
 #include "tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <getopt.h>
 int yyerror(const char *s);
 int yylex(void);
 extern int lineno;
+extern int charno;
+extern FILE* yyin;
 Node* root;
 %}
 
@@ -288,13 +291,48 @@ ListExp:
 
 int yyerror(const char *s)
 {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "%s on line %d at character %d\n", s, lineno, charno);
     return 1;
 }
 
-int main(){
+
+int main(int argc, char* argv[]) {
+    int opt;
+    int tree = 0;
+    char *filename = NULL;
+
+    static struct option long_options[] = {
+        {"tree", no_argument, 0, 1},
+        {"file", required_argument, 0, 'f'},
+        {0, 0, 0, 0}
+    };
+
+    while ((opt = getopt_long(argc, argv, "tf:", long_options, NULL)) != -1) {
+        switch (opt) {
+            case 't':
+                tree = 1;
+                break;
+            case 'f':
+                filename = optarg;
+                break;
+            default:
+                fprintf(stderr, "Unknown option %c\n", opt);
+                return EXIT_FAILURE;
+        }
+    }
+
+    if (!filename) {
+        fprintf(stderr, "No filename given.\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("Filename: %s\n", filename);
+    printf("Tree: %s\n", tree ? "true" : "false");
+
+    yyin = fopen(filename, "r");
+
     int res = yyparse();
-    if (res == 0) printTree(root);
+    if (res == 0 && tree) printTree(root);
 
     return res;
 }

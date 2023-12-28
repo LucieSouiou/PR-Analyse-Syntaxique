@@ -1,0 +1,3 @@
+int printf(char text) {
+    printf(text);
+}
