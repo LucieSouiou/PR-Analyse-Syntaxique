@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <string.h>
 int yyerror(const char *s);
 int yylex(void);
 extern int lineno;
@@ -43,6 +44,7 @@ Exp TB FB M E T F LValue Arguments ListExp
 Prog:  DeclVars DeclFoncts
     {
         root = makeNode(Prog_e);
+        strcpy(root->text, "Prog");
         addChild(root, $1);
         addChild(root, $2);
     }
@@ -50,16 +52,23 @@ Prog:  DeclVars DeclFoncts
 
 DeclVars:
        DeclVars TYPE Declarateurs ';' {
+        $$ = $1;
         Node* type = makeNode(TYPE_e);
+        strcpy(type->text, "Type : ");
+        strcat(type->text, $2);
         addChild($1, type);
         addChild(type, $3);
        }
-    | {$$ = makeNode(DeclVars_e);}
+    | {
+        $$ = makeNode(DeclVars_e);
+        strcpy($$->text, "DeclVars");
+    }
     ;
 Declarateurs:
        Declarateurs ',' IDENT {
         $$ = $1;
         addSibling($1, makeNode(IDENT_e));
+        strcpy($1->nextSibling->text, $3);
        }
     |  Declarateurs ',' DeclArray {
         $$ = $1;
@@ -70,13 +79,18 @@ Declarateurs:
     }
     |  IDENT {
         $$ = makeNode(IDENT_e);
+        strcpy($$->text, $1);
     }
     ;
 DeclArray:
         IDENT '[' NUM ']' {
             $$ = makeNode(ARRAY_e);
+            sprintf($$->text, "%s[%d]", $1, $3);
+
             addChild($$, makeNode(IDENT_e));
+            strcpy($$->firstChild->text, $1);
             addChild($$, makeNode(NUM_e));
+            sprintf(SECONDCHILD($$)->text, "%d", $3);
         }
     ;
 DeclFoncts:
@@ -89,6 +103,7 @@ DeclFoncts:
 DeclFonct:
        EnTeteFonct Corps {
         $$ = makeNode(DeclFoncts_e);
+        strcpy($$->text, "DeclFonct");
         addChild($$, $1);
         addChild($$, $2);
        }
@@ -96,22 +111,32 @@ DeclFonct:
 EnTeteFonct:
        TYPE IDENT '(' Parametres ')' {
         $$ = makeNode(EnTeteFonct_e);
+        strcpy($$->text, "EnTeteFonct");
         addChild($$, makeNode(TYPE_e));
+        sprintf(FIRSTCHILD($$)->text, "Type : %s", $1);
         addChild($$, makeNode(IDENT_e));
+        strcpy(SECONDCHILD($$)->text, $2);
         addChild($$, $4);
     }
     |  VOID IDENT '(' Parametres ')' {
         $$ = makeNode(EnTeteFonct_e);
         addChild($$, makeNode(VOID_e));
+        strcpy(FIRSTCHILD($$)->text, $1);
         addChild($$, makeNode(IDENT_e));
+        strcpy(SECONDCHILD($$)->text, $2);
         addChild($$, $4);
     }
     ;
 Parametres:
-       VOID {$$ = makeNode(Parametres_e);
-       addChild($$, makeNode(VOID_e));}
+       VOID {
+        $$ = makeNode(Parametres_e);
+        strcpy($$->text, "Parametres");
+        addChild($$, makeNode(VOID_e));
+        strcpy(FIRSTCHILD($$)->text, $1);
+        }
     |  ListTypVar {
         $$ = makeNode(Parametres_e);
+        strcpy($$->text, "Parametres");
         addChild($$, $1);
     }
     ;
@@ -119,26 +144,35 @@ ListTypVar:
        ListTypVar ',' TYPE IDENT {
         $$ = $1;
         Node* type = makeNode(TYPE_e);
+        sprintf(type->text, "Type : %s", $3);
         addChild(type, makeNode(IDENT_e));
+        strcpy(FIRSTCHILD(type)->text, $4);
         addChild($$, type);
        }
     |  ListTypVar ',' TYPE IDENT '[' ']' {
         $$ = $1;
         Node* type = makeNode(TYPE_e);
+        sprintf(type->text, "Type : %s", $3);
         addChild(type, makeNode(IDENT_e));
+        sprintf(FIRSTCHILD(type)->text, "%s[]",$4);
         addChild($$, type);
     }
     |  TYPE IDENT {
         $$ = makeNode(TYPE_e);
+        sprintf($$->text, "Type : %s", $1);
         addChild($$, makeNode(IDENT_e));
+        strcpy(FIRSTCHILD($$)->text, $2);
     }
     |  TYPE IDENT '[' ']' {
         $$ = makeNode(TYPE_e);
+        sprintf($$->text, "Type : %s", $1);
         addChild($$, makeNode(IDENT_e));
+        sprintf(FIRSTCHILD($$)->text, "%s[]",$2);
     }
     ;
 Corps: '{' DeclVars SuiteInstr '}' {
         $$ = makeNode(Corps_e);
+        strcpy($$->text, "Corps");
         addChild($$, $2);
         addChild($$, $3);
     }
@@ -158,40 +192,51 @@ SuiteInstr:
 Instr:
        LValue '=' Exp ';' {
         $$ = makeNode(Assign_e);
+        strcpy($$->text, "Assign");
         addChild($$, $1);
         addChild($$, $3);
        }
     |  IF '(' Exp ')' Instr {
         $$ = makeNode(IF_e);
+        strcpy($$->text, "IF");
         addChild($$, $3);
         addChild($$, $5);
     }
     |  IF '(' Exp ')' Instr ELSE Instr {
         $$ = makeNode(IF_e);
+        strcpy($$->text, "IF");
         addChild($$, $3);
         addChild($$, $5);
         addChild($$, $7);
     }
     |  WHILE '(' Exp ')' Instr {
         $$ = makeNode(WHILE_e);
+        strcpy($$->text, "WHILE");
         addChild($$, $3);
         addChild($$, $5);
     }
     |  IDENT '(' Arguments  ')' ';' {
         $$ = makeNode(AppelFonc_e);
+        strcpy($$->text, "AppelFonc");
         addChild($$, makeNode(IDENT_e));
+        strcpy(FIRSTCHILD($$)->text, $1);
         addChild($$, $3);
     }
     |  RETURN Exp ';' {
         $$ = makeNode(RETURN_e);
+        strcpy($$->text, "RETURN");
         addChild($$, $2);
     }
-    |  RETURN ';' {$$ = makeNode(RETURN_e);}
+    |  RETURN ';' {
+        $$ = makeNode(RETURN_e);
+        strcpy($$->text, "RETURN");
+        }
     |  '{' SuiteInstr '}' {$$ = $2;}
     |  ';' {$$ = NULL;}
     ;
 Exp :  Exp OR TB {
         $$ = makeNode(OR_e);
+        strcpy($$->text, "OR");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -201,6 +246,7 @@ Exp :  Exp OR TB {
     ;
 TB  :  TB AND FB {
         $$ = makeNode(AND_e);
+        strcpy($$->text, "AND");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -210,6 +256,7 @@ TB  :  TB AND FB {
     ;
 FB  :  FB EQ M {
         $$ = makeNode(EQ_e);
+        strcpy($$->text, "EQ");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -219,6 +266,7 @@ FB  :  FB EQ M {
     ;
 M   :  M ORDER E {
         $$ = makeNode(ORDER_e);
+        strcpy($$->text, "ORDER");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -228,6 +276,7 @@ M   :  M ORDER E {
     ;
 E   :  E ADDSUB T {
         $$ = makeNode(ADDSUB_e);
+        strcpy($$->text, "ADDSUB");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -237,6 +286,7 @@ E   :  E ADDSUB T {
     ;    
 T   :  T DIVSTAR F {
         $$ = makeNode(DIVSTAR_e);
+        strcpy($$->text, "DIVSTAR");
         addChild($$, $1);
         addChild($$, $3);
     }
@@ -246,34 +296,50 @@ T   :  T DIVSTAR F {
     ;
 F   :  ADDSUB F {
         $$ = makeNode(ADDSUB_UN_e);
+        strcpy($$->text, "Addsub Unitaire");
         addChild($$, $2);
     }
     |  '!' F {
         $$ = makeNode(Negatif_e);
+        strcpy($$->text, "!");
         addChild($$, $2);
     }
     |  '(' Exp ')' {
         $$ = $2;
     }
-    |  NUM {$$ = makeNode(NUM_e);}
-    |  CHARACTER {$$ = makeNode(CHARACTER_e);}
+    |  NUM {
+        $$ = makeNode(NUM_e);
+        sprintf($$->text, "%d", $1);
+        }
+    |  CHARACTER {
+        $$ = makeNode(CHARACTER_e);
+        sprintf($$->text, "%s", $1);
+        }
     |  LValue {$$ = $1;}
     |  IDENT '(' Arguments ')' {
         $$ = makeNode(AppelFonc_e);
+        strcpy($$->text, "AppelFonc");
         addChild($$, makeNode(IDENT_e));
+        strcpy(FIRSTCHILD($$)->text, $1);
         addChild($$, $3);
     } 
     ;
 LValue:
-       IDENT {$$ = makeNode(IDENT_e);}
+       IDENT {
+        $$ = makeNode(IDENT_e);
+        strcpy($$->text, $1);
+        }
     |  IDENT '[' Exp ']' {
         $$ = makeNode(IDENT_e);
+        strcpy($$->text, $1);
+        strcat($$->text, "[]");
         addChild($$, $3);
     } 
     ;
 Arguments:
        ListExp {
         $$ = makeNode(Arguments_e);
+        strcpy($$->text, "Arguments");
         addChild($$, $1);
        }
     | {$$ = NULL;}

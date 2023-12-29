@@ -50,6 +50,7 @@ typedef struct Node {
   label_t label;
   struct Node *firstChild, *nextSibling;
   int lineno;
+  char text[128];
 } Node;
 
 Node *makeNode(label_t label);
