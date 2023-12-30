@@ -11,7 +11,6 @@
 </div>
 
 ---
-<div style="page-break-after: always;"></div>
 
 # <a name="Manuel">Manuel d'Utilisateur</a>
 
@@ -34,26 +33,25 @@ Afin d'automatiser l'analyse des tests, il suffit d'utiliser le script `ScriptTe
 
 
 ---
-<div style="page-break-after: always;"></div>
 
 # <a name="Etat">Etat d'avancement du projet</a>
 
-Nous avons pu finir le projet dans son intégralité en répondant bien à toutes les consignes du sujet. 
-L'analyseur syntaxique fonctionne bien comme demandé, en indiquant si il y a erreur syntaxique (si oui, avec sa ligne et le caractère proche de l'erreur). 
-Nous avons aussi bien implementé l'affichage de l'arbre syntaxique avec deux options (valeurs ou label des tokens). 
+Nous avons pu finir le projet dans son intégralité en répondant bien à toutes les consignes du sujet.<br>
+L'analyseur syntaxique fonctionne bien comme demandé, en indiquant si il y a erreur syntaxique (si oui, avec sa ligne et le caractère proche de l'erreur).<br>
+Nous avons aussi bien implementé l'affichage de l'arbre syntaxique avec deux options (valeurs ou label des tokens).<br>
 Nous avons donc bien complété toutes les fonctionalités.
 
 ---
-<div style="page-break-after: always;"></div>
 
 # <a name="Organisation">Organisation du travail</a>
 
-Nous avons tout d'abord commencé par la modification de la grammaire en s'appuyant sur les tests du bac à sable et ce qui était demandé dans le sujet.
+Nous avons tout d'abord commencé par la modification de la grammaire en s'appuyant sur les tests du bac à sable et ce qui était demandé dans le sujet.<br>
 Nous avons eu à plusieurs reprises quelques difficultés afin de compléter tous les tests sans savoir quelle était leur nature, en particulier avec les tests de tableaux.
 
-Ensuite, Amal a géré la création et l'affichage des arbres, et Lucie les affichages d'erreurs syntaxiques. 
-Nous avons également rencontré des difficultés en générant l'arbre, qui provoquait une erreur de segmentation dont nous n'avons pas trouvé la source. Amal a donc repris cette partie de zéro pour régler ce problème. 
+Ensuite, Amal a géré la création et l'affichage des arbres, et Lucie les affichages d'erreurs syntaxiques.<br>
+Nous avons également rencontré des difficultés en générant l'arbre, qui provoquait une erreur de segmentation dont nous n'avons pas trouvé la source.<br>
+Amal a donc repris cette partie de zéro pour régler ce problème. 
 
-Enfin, nous avons créé un ensemble de tests valides et un ensemble de tests d'erreur syntaxique afin de pouvoir tester notre analyseur syntaxique plus facilement et régler certains problèmes qui n'étaient pas détectés auparavant. 
+Enfin, nous avons créé un ensemble de tests valides et un ensemble de tests d'erreur syntaxique afin de pouvoir tester notre analyseur syntaxique plus facilement et régler certains problèmes qui n'étaient pas détectés auparavant.<br>
 Enfin, Lucie a implémenté un parseur d'argument à l'aide de `getopt`, et Amal un script permettant de lancer tous les tests automatiquement et donnant une note à l'analyseur syntaxique.
 
