@@ -392,14 +392,14 @@ int main(int argc, char* argv[]) {
                 break;
             default:
                 fprintf(stderr, "Unknown option %c. Use -h or --help for help.\n", opt);
-                return EXIT_FAILURE;
+                return 2;
         }
     }
 
     if (argv[optind] != NULL) {
         if ((yyin = fopen(argv[optind], "r"))) {
             fprintf(stderr, "File not found. Use -h or --help for help.\n");
-            return EXIT_FAILURE;
+            return 2;
         }
     }
     else {
