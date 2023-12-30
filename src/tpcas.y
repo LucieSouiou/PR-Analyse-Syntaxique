@@ -364,7 +364,7 @@ int yyerror(const char *s) {
 
 
 void help() {
-    printf("This program is able to detect syntax errors in a C file provided.\n"");
+    printf("This program is able to detect syntax errors in a C file provided.\n");
     printf("Usage : ./bin/tpcas [filepath] [-t/--tree] [-h/--help]\n");
     printf(" - file path (mandatory) : first non-optional argument, provides the file path to analyze.\n");
     printf(" - -t / --tree (optional) : prints code tree if the file provided has no syntax error.\n");
@@ -375,7 +375,6 @@ void help() {
 int main(int argc, char* argv[]) {
     int opt;
     int tree = 0;
-    char *filename = NULL;
 
     static struct option long_options[] = {
         {"help", no_argument, 0, 'h'},
@@ -398,16 +397,10 @@ int main(int argc, char* argv[]) {
     }
 
     if (argv[optind] != NULL)
-        filename = argv[optind];
+        yyin = fopen(argv[optind], "r");
     else {
-        fprintf(stderr, "No filename given. Use -h or --help for help.\n");
-        return EXIT_FAILURE;
+        fprintf(stderr, "No filename given. Reading standard input. Use -h or --help for help.\n");
     }
-
-    printf("Filename: %s\n", filename);
-    printf("Tree: %s\n", tree ? "true" : "false");
-
-    yyin = fopen(filename, "r");
 
     int res = yyparse();
     if (res == 0 && tree) printTree(root);
