@@ -396,11 +396,17 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if (argv[optind] != NULL)
-        yyin = fopen(argv[optind], "r");
+    if (argv[optind] != NULL) {
+        if ((yyin = fopen(argv[optind], "r"))); {
+            fprintf(stderr, "File not found. Use -h or --help for help.\n");
+            return EXIT_FAILURE;
+        }
+    }
     else {
         fprintf(stderr, "No filename given. Reading standard input. Use -h or --help for help.\n");
     }
+
+    
 
     int res = yyparse();
     if (res == 0 && tree) printTree(root);
