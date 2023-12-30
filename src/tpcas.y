@@ -356,10 +356,19 @@ ListExp:
     ;
 %%
 
-int yyerror(const char *s)
-{
+
+int yyerror(const char *s) {
     fprintf(stderr, "%s on line %d at character %d\n", s, lineno, charno);
     return 1;
+}
+
+
+void help() {
+    printf("This program is able to detect syntax errors in a C file provided.\n"");
+    printf("Usage : ./bin/tpcas [filepath] [-t/--tree] [-h/--help]\n");
+    printf(" - file path (mandatory) : first non-optional argument, provides the file path to analyze.\n");
+    printf(" - -t / --tree (optional) : prints code tree if the file provided has no syntax error.\n");
+    printf(" - -h / --help (optional) : shows you this help message (only)");
 }
 
 
@@ -369,27 +378,29 @@ int main(int argc, char* argv[]) {
     char *filename = NULL;
 
     static struct option long_options[] = {
+        {"help", no_argument, 0, 'h'},
         {"tree", no_argument, 0, 1},
-        {"file", required_argument, 0, 'f'},
         {0, 0, 0, 0}
     };
 
-    while ((opt = getopt_long(argc, argv, "tf:", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "ht", long_options, NULL)) != -1) {
         switch (opt) {
+            case 'h':
+                help();
+                return EXIT_SUCCESS;
             case 't':
                 tree = 1;
                 break;
-            case 'f':
-                filename = optarg;
-                break;
             default:
-                fprintf(stderr, "Unknown option %c\n", opt);
+                fprintf(stderr, "Unknown option %c. Use -h or --help for help.\n", opt);
                 return EXIT_FAILURE;
         }
     }
 
-    if (!filename) {
-        fprintf(stderr, "No filename given.\n");
+    if (argv[optind] != NULL)
+        filename = argv[optind];
+    else {
+        fprintf(stderr, "No filename given. Use -h or --help for help.\n");
         return EXIT_FAILURE;
     }
 
