@@ -57,7 +57,7 @@ Node *makeNode(label_t label);
 void addSibling(Node *node, Node *sibling);
 void addChild(Node *parent, Node *child);
 void deleteTree(Node*node);
-void printTree(Node *node);
+void printTree(Node *node, int labelmode);
 
 #define FIRSTCHILD(node) node->firstChild
 #define SECONDCHILD(node) node->firstChild->nextSibling

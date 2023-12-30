@@ -1,0 +1,11 @@
+#define A 2
+
+int main(void){
+    int i;
+    i = 0;
+    while(i <= A){
+        printf(i);
+        i = i + 1;
+    }
+    return 0;
+}

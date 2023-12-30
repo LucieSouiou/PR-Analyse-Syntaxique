@@ -3,6 +3,10 @@ char b, c, bonjour;
 int tab1[5]; char tab2[10];
 int test[2], test2[3], test[4], i;
 
+/** Ceci est un commentaire 
+sur plusieurs lignes.**/
+
+// Fonction très bateau qui ne fait pas grand chose
 int addition(int a, int b){
     i = 0;
     while(!test()){
@@ -11,6 +15,7 @@ int addition(int a, int b){
     return a + b + i;
 }
 
+// Deuxième fonction très bateau qui ne fait pas grand chose non plus...
 void test(void){
     int bonjour, buongiorno[27];
     char hello;

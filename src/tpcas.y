@@ -368,7 +368,9 @@ void help() {
     printf("This program is able to detect syntax errors in a C file provided.\n");
     printf("Usage : ./bin/tpcas [filepath] [-t/--tree] [-h/--help]\n");
     printf(" - file path (mandatory) : first non-optional argument, provides the file path to analyze.\n");
-    printf(" - -t / --tree (optional) : prints code tree if the file provided has no syntax error.\n");
+    printf(" - -t / --tree (optional) : prints code tree with the token value if the file provided has no syntax error.\n");
+    printf(" - -l / --label (optional) : prints code tree with the token label if the file provided has no syntax error.\n");
+    
     printf(" - -h / --help (optional) : shows you this help message (only)");
 }
 
@@ -377,19 +379,24 @@ int main(int argc, char* argv[]) {
     int opt;
     int tree = 0;
 
+
     static struct option long_options[] = {
         {"help", no_argument, 0, 'h'},
-        {"tree", no_argument, 0, 1},
+        {"tree", no_argument, 0, 't'},
+        {"label", no_argument, 0, 'l'},
         {0, 0, 0, 0}
     };
 
-    while ((opt = getopt_long(argc, argv, "ht", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "htl", long_options, NULL)) != -1) {
         switch (opt) {
             case 'h':
                 help();
                 return EXIT_SUCCESS;
             case 't':
                 tree = 1;
+                break;
+            case 'l':
+                tree = 2;
                 break;
             default:
                 fprintf(stderr, "Unknown option %c. Use -h or --help for help.\n", opt);
@@ -410,7 +417,7 @@ int main(int argc, char* argv[]) {
     
 
     int res = yyparse();
-    if (res == 0 && tree) printTree(root);
+    if (res == 0 && tree) printTree(root, tree);
 
     return res;
 }

@@ -90,7 +90,7 @@ void deleteTree(Node *node) {
   free(node);
 }
 
-void printTree(Node *node) {
+void printTree(Node *node, int labelmode) {
   static bool rightmost[128]; // tells if node is rightmost sibling
   static int depth = 0;       // depth of current node
   for (int i = 1; i < depth; i++) { // 2502 = vertical line
@@ -99,13 +99,14 @@ void printTree(Node *node) {
   if (depth > 0) { // 2514 = L form; 2500 = horizontal line; 251c = vertical line and right horiz 
     printf(rightmost[depth] ? "\u2514\u2500\u2500 " : "\u251c\u2500\u2500 ");
   }
-  //printf("%s", StringFromLabel[node->label]);
-  printf("%s", node->text);
+  if(labelmode == 2) printf("%s", StringFromLabel[node->label]);
+  else        printf("%s", node->text);
+
   printf("\n");
   depth++;
   for (Node *child = node->firstChild; child != NULL; child = child->nextSibling) {
     rightmost[depth] = (child->nextSibling) ? false : true;
-    printTree(child);
+    printTree(child, labelmode);
   }
   depth--;
 }
