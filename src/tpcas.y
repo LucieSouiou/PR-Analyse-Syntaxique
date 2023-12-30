@@ -67,8 +67,9 @@ DeclVars:
 Declarateurs:
        Declarateurs ',' IDENT {
         $$ = $1;
-        addSibling($1, makeNode(IDENT_e));
-        strcpy($1->nextSibling->text, $3);
+        Node* temp = makeNode(IDENT_e);
+        strcpy(temp->text, $3);
+        addSibling($$, temp);
        }
     |  Declarateurs ',' DeclArray {
         $$ = $1;
