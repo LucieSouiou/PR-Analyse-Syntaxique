@@ -1,0 +1,34 @@
+int a;
+char b, c, bonjour;
+int tab1[5]; char tab2[10];
+int test[2], test2[3], test[4], i;
+
+int addition(int a, int b){
+    i = 0;
+    while(!test()){
+        i = i + 1;
+    }
+    return a + b + i;
+}
+
+void test(void){
+    int bonjour, buongiorno[27];
+    char hello;
+
+    bonjour = -5;
+    buongiorno[3] = bonjour % 3;
+    buongiorno[3*7/bonjour] = 148;
+    hello = 'a';
+
+    if (bonjour < 5 || buongiorno[7] != 3 && hello == 'a'){
+        i = 2;
+    }
+    else {
+        i = 0;
+        while(bonjour >= 0){
+            tab1[i] = i + a + addition(a, b);
+        }
+    }
+    return;
+
+}
