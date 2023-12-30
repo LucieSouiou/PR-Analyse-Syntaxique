@@ -121,6 +121,7 @@ EnTeteFonct:
     }
     |  VOID IDENT '(' Parametres ')' {
         $$ = makeNode(EnTeteFonct_e);
+        strcpy($$->text, "EnTeteFonct");
         addChild($$, makeNode(VOID_e));
         strcpy(FIRSTCHILD($$)->text, $1);
         addChild($$, makeNode(IDENT_e));
