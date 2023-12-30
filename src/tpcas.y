@@ -398,7 +398,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (argv[optind] != NULL) {
-        if ((yyin = fopen(argv[optind], "r"))) {
+        if ((yyin = fopen(argv[optind], "r")) == NULL) {
             fprintf(stderr, "File not found. Use -h or --help for help.\n");
             return 2;
         }
