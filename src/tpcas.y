@@ -420,7 +420,7 @@ int main(int argc, char* argv[]) {
 
     if (res == 0) {
         if (tree)
-            printTree(root);
+            printTree(root, tree);
         else
             printf("No syntax error found.\n");
     }
