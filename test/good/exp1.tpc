@@ -1,0 +1,9 @@
+int main(void){
+    int a, b;
+    a = 10;
+    b = 4;
+    a = a + 10 - 5 * 3 / 3;
+    b = b * 150 / 10 % 5;
+
+    return a + b;
+}

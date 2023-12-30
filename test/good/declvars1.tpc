@@ -1,0 +1,6 @@
+int main(void){
+    int hello, bonjour;
+    hello = -1;
+    bonjour = +1;
+    return 0;
+}

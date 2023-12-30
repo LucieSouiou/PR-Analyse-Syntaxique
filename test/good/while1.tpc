@@ -1,0 +1,16 @@
+void gameLoop(void){
+    while(1){
+        doStuff();
+        if (move){
+            while(move){
+                doOtherStuff();
+            }
+        }
+        else if(attack()){
+            while(enemyNear()){
+                attackDone();
+            }
+        }
+    }
+    return;
+}
