@@ -415,9 +415,15 @@ int main(int argc, char* argv[]) {
     }
 
     
-
     int res = yyparse();
-    if (res == 0 && tree) printTree(root, tree);
+
+
+    if (res == 0) {
+        if (tree)
+            printTree(root);
+        else
+            printf("No syntax error found.\n");
+    }
 
     return res;
 }
